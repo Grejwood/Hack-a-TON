@@ -1,0 +1,35 @@
+.container {
+  padding: 50px 0;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.cards {
+  margin-top: 100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 50px;
+  align-items: stretch;
+  justify-items: center;
+}
+
+.card {
+  background-color: dodgerblue;
+  color: white;
+  width: 100%;
+  height: 300px;
+  border-radius: 3px;
+}
