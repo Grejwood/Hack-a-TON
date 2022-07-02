@@ -1,4 +1,4 @@
-![img.png](img.png)
+![img.png](src/assets/img/readmyImg.png)
 
 # Getting Started with Create React App
 
