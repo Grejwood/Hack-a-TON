@@ -6,7 +6,7 @@ import PreviewImg from "../../components/layout/PreviewImg";
 
 const Home = (props) => {
   const [files, setFiles] = useState([]);
-  const [blur, setBlur]= useState(true);
+  const [blur, setBlur]= useState(false);
   const [guest, setGuest] = useState(false);
 
   return (
@@ -37,7 +37,7 @@ const Home = (props) => {
         className={style.submitBtn}
         disabled={!files.length}
       >
-        Send photos
+        Send Photos
       </Button>
     </div>
   );

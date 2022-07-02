@@ -23,7 +23,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 50px;
-  //grid-gap: 100px 36px;
   align-items: stretch;
   justify-items: center;
 }
@@ -40,13 +39,15 @@
   position: absolute;
   bottom: 0;
   left: 0;
-
   padding: 8px 12px;
   width: 100%;
   height: auto;
   background: #c4347b;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .label {
@@ -68,4 +69,12 @@
   filter: blur(20px);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+}
+
+.buyBtn {
+  border-radius: 15px;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
