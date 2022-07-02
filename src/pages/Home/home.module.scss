@@ -1,5 +1,5 @@
 .container {
-  padding: 50px 0;
+  padding: 50px 20px;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -17,19 +17,6 @@
   font-weight: bold;
 }
 
-.cards {
-  margin-top: 100px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 50px;
-  align-items: stretch;
-  justify-items: center;
-}
-
-.card {
-  background-color: dodgerblue;
-  color: white;
-  width: 100%;
-  height: 300px;
-  border-radius: 3px;
+.submitBtn {
+  margin-top: 50px;
 }

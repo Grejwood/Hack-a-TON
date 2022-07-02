@@ -1,0 +1,19 @@
+.input {
+  padding: 10px 0 10px 10px;
+  width: 60%;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  margin: 20px auto;
+  font-size: 16px;
+  outline: none;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #d5d5d5;
+  transition: border 0.1s, border-color 0.1s;
+
+  &:focus {
+    border-color: rgba(0, 121, 250, 0.8);
+    box-shadow: 0 0 0 2px rgba(0, 121, 250, 0.3);
+  }
+}

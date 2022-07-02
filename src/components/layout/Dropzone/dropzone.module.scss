@@ -1,10 +1,35 @@
+$base-dropzone-color: #c4347b;
+//$base-color: #0079fa;
+
 .container {
   margin-top: 100px;
   padding: 50px;
-  border: 2px dashed #0079fa;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: #ef76b2;
   border-radius: 10px;
+  background: #fcfbfb;
+  cursor: pointer;
+  transition: border 0.1s, background 0.1s;
+
+  &:hover {
+    border-color: $base-dropzone-color;
+    background: #f8f5f5;
+  }
+}
+
+.dragActive {
+  border: 2px dashed $base-dropzone-color;
+  background: #f8f5f5;
 }
 
 .dropzoneText {
    color: #969696;
+}
+
+.thumbsContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

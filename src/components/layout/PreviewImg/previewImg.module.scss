@@ -1,0 +1,36 @@
+.thumb {
+  display: inline-flex;
+}
+
+.thumbInner {
+  min-width: 0;
+  width: 100%;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards {
+  margin: 100px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 100px;
+  align-items: stretch;
+  justify-items: center;
+}
+
+.card {
+  background-color: dodgerblue;
+  color: white;
+  width: 100%;
+  height: 300px;
+  border-radius: 3px;
+}
+
+.input {
+  margin-top: 20px;
+}

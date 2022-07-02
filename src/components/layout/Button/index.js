@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './btn.module.scss';
+import cx from 'classnames';
 
-const Button = ({children}) => {
+const Button = ({className, children}) => {
   return (
-    <button className={styles.btn}>
+    <button className={cx(styles.btn, className)}>
       {children}
     </button>
   );
