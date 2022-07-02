@@ -24,12 +24,13 @@ $base-dropzone-color: #c4347b;
 }
 
 .dropzoneText {
-   color: #969696;
+  margin: 0;
+  color: #969696;
 }
 
-.thumbsContainer {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
+//.thumbsContainer {
+//  margin-top: 20px;
+//  display: flex;
+//  flex-direction: row;
+//  flex-wrap: wrap;
+//}

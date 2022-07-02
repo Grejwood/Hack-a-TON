@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useState} from "react";
 import style from "./home.module.scss";
 import Button from "../../components/layout/Button";
 import Dropzone from "../../components/layout/Dropzone";
+import PreviewImg from "../../components/layout/PreviewImg";
 
 const Home = (props) => {
+  const [files, setFiles] = useState([]);
+  const [blur, setBlur]= useState(true);
+  const [guest, setGuest] = useState(false);
+
   return (
     <div className={style.container}>
       <div className={style.header}>
@@ -13,10 +18,27 @@ const Home = (props) => {
         </Button>
       </div>
 
-      <Dropzone />
+      {!guest && (
+        <Dropzone
+          files={files}
+          setFiles={setFiles}
+        />
+      )}
 
-      <Button className={style.submitBtn}>Submit photo</Button>
+      {!!files.length && (
+        <PreviewImg
+          className={style.thumbsContainer}
+          files={files}
+          blur={blur}
+        />
+      )}
 
+      <Button
+        className={style.submitBtn}
+        disabled={!files.length}
+      >
+        Send photos
+      </Button>
     </div>
   );
 };

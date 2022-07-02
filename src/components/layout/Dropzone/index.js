@@ -4,10 +4,7 @@ import style from "./dropzone.module.scss";
 import {useDropzone} from 'react-dropzone';
 import PreviewImg from "../PreviewImg";
 
-const Dropzone = () => {
-  const [files, setFiles] = useState([]);
-  console.log('files', files);
-
+const Dropzone = ({ files, setFiles }) => {
   const [value, setValue] = useState([]);
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
@@ -58,12 +55,12 @@ const Dropzone = () => {
         }
       </div>
 
-      {!!files.length && (
-        <PreviewImg
-          className={style.thumbsContainer}
-          files={files}
-        />
-      )}
+      {/*{!!files.length && (*/}
+      {/*  <PreviewImg*/}
+      {/*    className={style.thumbsContainer}*/}
+      {/*    files={files}*/}
+      {/*  />*/}
+      {/*)}*/}
 
       {/*<aside className={style.thumbsContainer}>*/}
       {/*  {thumbs}*/}

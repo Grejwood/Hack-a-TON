@@ -3,7 +3,9 @@
 }
 
 .thumbInner {
-  min-width: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  position: relative;
   width: 100%;
 }
 
@@ -12,25 +14,58 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 .cards {
   margin: 100px 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 100px;
+  grid-gap: 50px;
+  //grid-gap: 100px 36px;
   align-items: stretch;
   justify-items: center;
 }
 
 .card {
-  background-color: dodgerblue;
   color: white;
   width: 100%;
   height: 300px;
-  border-radius: 3px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
-.input {
-  margin-top: 20px;
+.footerCard {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  padding: 8px 12px;
+  width: 100%;
+  height: auto;
+  background: #c4347b;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.label {
+  margin: 0;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.blur {
+  -webkit-filter: blur(20px);
+  -moz-filter: blur(20px);
+  -o-filter: blur(20px);
+  -ms-filter: blur(20px);
+  filter: blur(20px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
