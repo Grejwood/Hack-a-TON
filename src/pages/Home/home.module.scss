@@ -13,12 +13,30 @@
 }
 
 .name {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.label {
+  font-weight: 500;
+  margin: 0;
+
+  > span {
+    padding-left: 10px;
+    font-weight: 700;
+    font-size: 18px;
+  }
 }
 
 .submitBtn {
-  margin-top: 50px;
+  display: flex;
+  margin-top: 30px;
+  margin-left: auto;
+}
+
+.published {
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .thumbsContainer {
@@ -26,4 +44,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.info {
+  margin-top: 30px;
 }

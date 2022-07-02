@@ -7,7 +7,7 @@ $base-dropzone-color: #c4347b;
   border-width: 2px;
   border-style: dashed;
   border-color: #ef76b2;
-  border-radius: 10px;
+  border-radius: 20px;
   background: #fcfbfb;
   cursor: pointer;
   transition: border 0.1s, background 0.1s;
@@ -26,6 +26,8 @@ $base-dropzone-color: #c4347b;
 .dropzoneText {
   margin: 0;
   color: #969696;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 //.thumbsContainer {

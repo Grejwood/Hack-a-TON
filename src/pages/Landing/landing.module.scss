@@ -1,0 +1,56 @@
+.container {
+  padding: 50px 20px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: 600;
+  text-decoration: none;
+  color: black;
+}
+
+.tonLabel {
+  color: #0088cc;
+  font-weight: 800;
+}
+
+.body {
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin-top: 100px;
+  font-size: 75px;
+  font-weight: 700;
+}
+
+.callToActionBtn {
+  font-size: 24px;
+  border-radius: 20px;
+  padding: 12px 18px;
+  background: #0079fa;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  text-decoration: none;
+
+  &:hover {
+    color: #fff;
+    background-color: #0067d2;
+  }
+}

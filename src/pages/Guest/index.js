@@ -8,9 +8,12 @@ import ImageTwo from "../../assets/img/ImageTwo.jpg";
 import imageThree from "../../assets/img/imageThree.jpg";
 import imageFour from "../../assets/img/imageFour.jpg";
 import imageFive from "../../assets/img/imageFive.jpg";
+import {Logo} from "../Landing";
 
 const Guest = () => {
   const [guest, setGuest] = useState(true);
+  const [balance, setBalance] = useState(0);
+  const [address, setAddress] = useState("0x543fmv59ghj458bh5b934");
 
   const listOfImages = [
     {preview: imageOne, isSell: false},
@@ -24,16 +27,16 @@ const Guest = () => {
     <div className={style.container}>
 
       <div className={style.header}>
-        <span className={style.name}>ProjectName</span>
+        <Logo/>
         <Button>
           TON Wallet Connect
         </Button>
       </div>
 
-      <div>
-        <p>List of images</p>
-        <p>Balance: </p>
-        <p>Address: </p>
+      <div className={style.info}>
+        <span className={style.name}>For Guest</span>
+        <p className={style.label}>Balance: <span>{balance}</span></p>
+        <p className={style.label}>Address: <span>{address}</span></p>
       </div>
 
       <PreviewImg
