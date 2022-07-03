@@ -35,9 +35,19 @@ const GuestView = ({
   if (status === "notStarted") {
     currentInstruction = (
       <>
-        To start a payment channel, top-up your temporary wallet. Send amount
-        you're expecting to spend +0.02 TON for network fees. After closing the
-        channel unspent funds will return to your main wallet.
+        <p>
+          To start a payment channel, top-up your temporary wallet. Send amount
+          you're expecting to spend +0.02 TON for network fees. After closing
+          the channel unspent funds will return to your main wallet.
+        </p>
+        <Button
+          style={{ padding: "6px 10px", fontSize: 16, borderRadius: 10 }}
+          onClick={() => {
+            window.open(`ton://transfer/${walletAddressA}?text=Wallet top-up`);
+          }}
+        >
+          Open Tonkeeper
+        </Button>
       </>
     );
   } else if (status === "channelOpen") {
