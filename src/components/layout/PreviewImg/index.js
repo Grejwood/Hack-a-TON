@@ -32,6 +32,9 @@ const PreviewImg = ({ className, blur, slots, guest, buySlot, canBuy }) => {
                   Price {fromNano(file.price)} TON
                 </span>
               </div>
+              {!guest && file.isSold && (
+                <span className={style.price}>Sold ✅</span>
+              )}
               {guest && !file.isSold && canBuy && (
                 <Button className={style.buyBtn} onClick={() => buySlot(file)}>
                   Buy Now

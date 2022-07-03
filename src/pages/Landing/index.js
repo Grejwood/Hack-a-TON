@@ -14,7 +14,7 @@ const Landing = () => {
           className={styles.callToActionBtn}
           to={`/artist/${channelId.current}`}
         >
-          Create new page
+          Start new page
         </Link>
       </div>
       <div className={styles.body}>

@@ -9,6 +9,7 @@ export const Artist = () => {
   const providerRef = useRef(null);
   const tonweb = providerRef.current;
   const [walletAddressB, setWalletAddress] = useState(null);
+  const [channelAddress, setChannelAddress] = useState(null);
   const [walletB, setWallet] = useState(null);
   const [keyPairB, setKeyPair] = useState(null);
   const [status, setStatus] = useState("empty");
@@ -29,10 +30,7 @@ export const Artist = () => {
 
   const setUp = async () => {
     providerRef.current = getProvider();
-    const [newKeyPair, wallet] = getWallet(
-      providerRef.current,
-      "L3mPBNy0eCtZbCen+fEQlwBuN2WhtWxDlZF5isKhqlY="
-    );
+    const [newKeyPair, wallet] = getWallet(providerRef.current, "artist");
     setWallet(wallet);
     setKeyPair(newKeyPair);
     const walletAddress = await wallet.getAddress();
@@ -58,8 +56,8 @@ export const Artist = () => {
     const channelInitState = {
       balanceA: toNano(channelConfig.initBalanceA), // A's initial balance in Toncoins. Next A will need to make a top-up for this amount
       balanceB: toNano("0"), // B's initial balance in Toncoins. Next B will need to make a top-up for this amount
-      seqnoA: new BN(0), // initially 0
-      seqnoB: new BN(0), // initially 0
+      seqnoA: new BN(channelConfig.seqnoA), // initially 0
+      seqnoB: new BN(channelConfig.seqnoB), // initially 0
     };
 
     const config = {
@@ -81,6 +79,7 @@ export const Artist = () => {
       hisPublicKey: hisPublicKey,
     });
     const channelAddress = await channel.current.getAddress(); // address of this payment channel smart-contract in blockchain
+    setChannelAddress(channelAddress.toString(true, true, true));
     console.log("channelAddress=", channelAddress.toString(true, true, true));
 
     if (
@@ -96,6 +95,8 @@ export const Artist = () => {
     sendEvent("channelOpened");
 
     setStatus("channelOpen");
+
+    console.log(channelInitState);
   };
 
   const fromWallet = () => {
@@ -154,8 +155,23 @@ export const Artist = () => {
     lastSignature.current = toUintArray(signatureA);
     fullState.current = newState;
 
-    // Mark slot sold
+    markSold(slotId);
     sendEvent("slotSold", { slotId });
+  };
+
+  const markSold = (slotId) => {
+    setSlots((current) =>
+      current.map((slot) => {
+        if (slot.id === slotId) {
+          return {
+            ...slot,
+            isSold: true,
+          };
+        } else {
+          return slot;
+        }
+      })
+    );
   };
 
   const prepareStateClose = () => {
@@ -191,10 +207,13 @@ export const Artist = () => {
   return (
     <ArtistView
       status={status}
+      walletAddressB={walletAddressB}
+      channelAddress={channelAddress}
       publishPage={publishPage}
       channelId={channelId}
       slots={slots}
       setSlots={setSlots}
+      fullState={fullState}
     />
   );
 };

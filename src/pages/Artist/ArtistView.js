@@ -5,7 +5,7 @@ import Button from "../../components/layout/Button";
 import PreviewImg from "../../components/layout/PreviewImg";
 import { Logo } from "../Landing";
 
-import { toNano } from "../../utils";
+import { fromNano, toNano } from "../../utils";
 
 import photo11 from "../../assets/img/photo11.jpeg";
 import photo2 from "../../assets/img/photo2.jpeg";
@@ -15,12 +15,20 @@ import photo8 from "../../assets/img/photo8.jpeg";
 import photo10 from "../../assets/img/photo10.jpeg";
 import loaderContent from "../../assets/img/loaderContent.svg";
 
-const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
+const ArtistView = ({
+  status,
+  slots,
+  setSlots,
+  publishPage,
+  channelId,
+  fullState,
+  walletAddressB,
+  channelAddress,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = () => {
     setIsLoading(true);
-
     setTimeout(() => {
       setSlots([
         {
@@ -38,25 +46,25 @@ const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
         {
           id: 3,
           content: photo3,
-          price: toNano("0.1").toString(),
+          price: toNano("0.3").toString(),
           isSold: false,
         },
         {
           id: 4,
           content: photo4,
-          price: toNano("0.1").toString(),
+          price: toNano("0.4").toString(),
           isSold: false,
         },
         {
           id: 5,
           content: photo8,
-          price: toNano("0.1").toString(),
+          price: toNano("0.5").toString(),
           isSold: false,
         },
         {
           id: 6,
           content: photo10,
-          price: toNano("0.1").toString(),
+          price: toNano("0.6").toString(),
           isSold: false,
         },
       ]);
@@ -83,7 +91,9 @@ const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
     currentInstruction = (
       <>
         Share the link with the fan for them to join the page.{" "}
-        <a href={joinLink} target='_blank'>{joinLink}</a>
+        <a href={joinLink} target="_blank">
+          {joinLink}
+        </a>
       </>
     );
   } else if (status === "channelOpen") {
@@ -117,9 +127,27 @@ const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
             Channel Status: <span>{statusLabel}</span>
           </p>
         )}
-        {currentInstruction && (
+        {walletAddressB && (
           <p className={style.label}>
-            Current instructions: <br />
+            Your temporary wallet: <span>{walletAddressB}</span>
+          </p>
+        )}
+        {channelAddress && (
+          <p className={style.label}>
+            Smart-contract address: <span>{channelAddress}</span>
+          </p>
+        )}
+        {fullState.current && (
+          <p className={style.label}>
+            Your balance:
+            <span>{fromNano(fullState.current.balanceB)} TON</span>
+          </p>
+        )}
+        {currentInstruction && (
+          <p className={style.label} style={{ paddingTop: 25, fontSize: 18 }}>
+            <p style={{ fontWeight: "bold", fontSize: 16 }}>
+              Current instructions:
+            </p>
             {currentInstruction}
           </p>
         )}
@@ -128,10 +156,11 @@ const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
       {status === "empty" && (
         <div className={style.dropzone} onClick={onSubmit}>
           <p className={style.dropzoneText}>
-            {isLoading
-              ? <img className={style.loader} src={loaderContent} alt='loader'/>
-              : 'Drop the files here, or click to select them'
-            }
+            {isLoading ? (
+              <img className={style.loader} src={loaderContent} alt="loader" />
+            ) : (
+              "Drop the files here, or click to select them"
+            )}
           </p>
         </div>
       )}

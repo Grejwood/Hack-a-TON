@@ -9,7 +9,6 @@ import {
   waitUntilState,
   waitUntilBalance,
 } from "../../utils";
-import { Button } from "react-bootstrap";
 import BN from "bn.js";
 import GuestView from "./GuestView";
 
@@ -35,10 +34,7 @@ export const Guest = () => {
 
   const setUp = async () => {
     providerRef.current = getProvider();
-    const [newKeyPair, wallet] = getWallet(
-      providerRef.current,
-      "H5794+0FVFs7QhS5JkKwFdbQWKyiEDv6bSFR6fUWHCQ="
-    );
+    const [newKeyPair, wallet] = getWallet(providerRef.current, "guest");
     setWallet(wallet);
     setKeyPair(newKeyPair);
     const walletAddress = await wallet.getAddress();
@@ -74,7 +70,7 @@ export const Guest = () => {
     };
 
     const channelConfig = {
-      channelId: new BN(6), // Channel ID, for each new channel there must be a new ID
+      channelId: new BN(1), // Channel ID, for each new channel there must be a new ID
       addressA: new tonweb.Address(walletAddressA), // A's funds will be withdrawn to this wallet address after the channel is closed
       addressB: new tonweb.Address(walletAddressB), // B's funds will be withdrawn to this wallet address after the channel is closed
       initBalanceA: channelInitState.balanceA,
@@ -145,6 +141,11 @@ export const Guest = () => {
 
     await waitUntilState(channel.current, 1);
 
+    const data = await channel.current.getData();
+
+    channelInitState.seqnoA = data.seqnoA;
+    channelInitState.seqnoB = data.seqnoB;
+
     sendEvent("shareChannelConfig", {
       channelConfig: {
         channelId: channelConfig.channelId.toString(),
@@ -152,11 +153,12 @@ export const Guest = () => {
         initBalanceA: fromNano(channelConfig.initBalanceA),
         publicKeyA: keyPairA.publicKey,
         channelAddressA: channelAddress.toString(true, true, true),
+        seqnoA: data.seqnoA.toString(),
+        seqnoB: data.seqnoB.toString(),
       },
     });
 
     fullState.current = channelInitState;
-    console.log(packState(fullState.current));
   };
 
   const toUintArray = (values) => {
@@ -293,9 +295,9 @@ export const Guest = () => {
     <GuestView
       status={status}
       walletAddressA={walletAddressA}
+      channelAddress={channelAddress}
       startChannel={startChannel}
       closeChannel={closeChannel}
-      channelAddress={channelAddress}
       fullState={fullState}
       buySlot={buySlot}
       slots={slots}

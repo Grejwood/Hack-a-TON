@@ -24,7 +24,7 @@ const GuestView = ({
     toppingUpChannel:
       "Smart-contract deployed. Sending funds to the channel...",
     initingChannel:
-      "Channel has been replenished. Syncing state with the artist...",
+      "Channel has been replenished. Syncing state with the Creator...",
     channelOpen: "Channel is open.",
     channelClosing: "Channel is being closed...",
     channelClosed: "Channel closed",
@@ -35,16 +35,15 @@ const GuestView = ({
   if (status === "notStarted") {
     currentInstruction = (
       <>
-        To start a payment channel, top-up your temporary address{" "}
-        <b>{walletAddressA}</b>. Send amount you're expecting to spend +0.02 TON
-        for network fees. After closing the channel unspent funds will return to
-        your main wallet.
+        To start a payment channel, top-up your temporary wallet. Send amount
+        you're expecting to spend +0.02 TON for network fees. After closing the
+        channel unspent funds will return to your main wallet.
       </>
     );
   } else if (status === "channelOpen") {
     currentInstruction = (
       <>
-        Your payment channel with an artist is open and you can start buying
+        Your payment channel with a Creator is open and you can start buying
         photos.
       </>
     );
@@ -102,8 +101,10 @@ const GuestView = ({
           </p>
         )}
         {currentInstruction && (
-          <p className={style.label}>
-            Current instructions: <br />
+          <p className={style.label} style={{ paddingTop: 25, fontSize: 18 }}>
+            <p style={{ fontWeight: "bold", fontSize: 16 }}>
+              Current instructions:
+            </p>
             {currentInstruction}
           </p>
         )}

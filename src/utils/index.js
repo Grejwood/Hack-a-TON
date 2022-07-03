@@ -10,8 +10,17 @@ export const getProvider = () => {
   );
 };
 
-export const getWallet = (tonweb, seed) => {
-  const seedB = window.TonWeb.utils.base64ToBytes(seed);
+export const getWallet = (tonweb, role) => {
+  let walletSeed = localStorage.getItem("walletSeed" + role);
+
+  if (!walletSeed) {
+    walletSeed = window.TonWeb.utils.bytesToBase64(
+      window.TonWeb.utils.newSeed()
+    );
+    localStorage.setItem("walletSeed" + role, walletSeed);
+  }
+
+  const seedB = window.TonWeb.utils.base64ToBytes(walletSeed);
   const keyPair = tonweb.utils.keyPairFromSeed(seedB);
   const wallet = tonweb.wallet.create({
     publicKey: keyPair.publicKey,
