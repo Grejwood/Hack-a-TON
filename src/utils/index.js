@@ -31,7 +31,7 @@ export const getWallet = (tonweb, role) => {
 
 const waitUntilCondition = (checkConditionMet) => {
   return new Promise((resolve, reject) => {
-    let attempts = 20;
+    let attempts = 60;
     const interval = setInterval(async () => {
       if (attempts <= 0) {
         clearInterval(interval);
@@ -43,7 +43,7 @@ const waitUntilCondition = (checkConditionMet) => {
         clearInterval(interval);
         resolve();
       }
-    }, 1000);
+    }, 500);
   });
 };
 

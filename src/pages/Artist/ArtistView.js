@@ -103,6 +103,13 @@ const ArtistView = ({
         soon as the fan buys some photo.
       </>
     );
+  } else if (status === "channelClosed") {
+    currentInstruction = (
+      <>
+        Payment session was successfully ended. Money that you earned were
+        transferred to your wallet.
+      </>
+    );
   }
 
   return (

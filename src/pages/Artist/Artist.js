@@ -95,8 +95,6 @@ export const Artist = () => {
     sendEvent("channelOpened");
 
     setStatus("channelOpen");
-
-    console.log(channelInitState);
   };
 
   const fromWallet = () => {
