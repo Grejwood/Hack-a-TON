@@ -301,34 +301,4 @@ export const Guest = () => {
       slots={slots}
     />
   );
-
-  return (
-    <div>
-      <p>State: {status}</p>
-      {status === "notStarted" && (
-        <Button onClick={startChannel}>Start channel</Button>
-      )}
-      {status === "channelOpen" && (
-        <Button onClick={closeChannel}>Close channel</Button>
-      )}
-      <p>
-        Balance:{" "}
-        {fullState.current ? fromNano(fullState.current.balanceA) : "none"}
-      </p>
-      <p>Wallet address A: {walletAddressA}</p>
-      <p>Wallet address B: {walletAddressB}</p>
-      <p>Slots</p>
-      {slots.map((slot) => (
-        <div key={slot.id}>
-          Slot {slot.id}, price: {fromNano(slot.price)}, sold:{" "}
-          {slot.isSold.toString()}
-          {status === "channelOpen" && (
-            <Button onClick={() => buySlot(slot)} disabled={slot.isSold}>
-              Buy
-            </Button>
-          )}
-        </div>
-      ))}
-    </div>
-  );
 };

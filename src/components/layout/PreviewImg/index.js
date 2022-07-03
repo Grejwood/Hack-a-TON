@@ -2,7 +2,7 @@ import React from "react";
 import style from "./previewImg.module.scss";
 import cx from "classnames";
 import Button from "../Button";
-import {fromNano, toNano} from "../../../utils";
+import { fromNano } from "../../../utils";
 
 const PreviewImg = ({ className, blur, slots, guest, buySlot, canBuy }) => {
   return (

@@ -11,11 +11,17 @@ export const Artist = () => {
   const [walletAddressB, setWalletAddress] = useState(null);
   const [walletB, setWallet] = useState(null);
   const [keyPairB, setKeyPair] = useState(null);
-  const [status, setStatus] = useState("notStarted");
+  const [status, setStatus] = useState("empty");
   const channel = useRef(null);
   const fullState = useRef(null);
   const lastSignature = useRef(null);
   const [slots, setSlots] = useState([]);
+
+  useEffect(() => {
+    if (slots.length > 0) {
+      setStatus("notPublished");
+    }
+  }, [slots]);
 
   useEffect(() => {
     setUp();
@@ -31,6 +37,10 @@ export const Artist = () => {
     setKeyPair(newKeyPair);
     const walletAddress = await wallet.getAddress();
     setWalletAddress(walletAddress.toString(true, true, true));
+  };
+
+  const publishPage = () => {
+    setStatus("notStarted");
   };
 
   const requestSlots = () => {
@@ -181,6 +191,8 @@ export const Artist = () => {
   return (
     <ArtistView
       status={status}
+      publishPage={publishPage}
+      channelId={channelId}
       slots={slots}
       setSlots={setSlots}
     />

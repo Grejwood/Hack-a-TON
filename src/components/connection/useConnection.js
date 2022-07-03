@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import Pusher from "pusher-js";
 import axios from "axios";
 
-function makeid(length) {
+export function makeid(length) {
   var result = "";
   var characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

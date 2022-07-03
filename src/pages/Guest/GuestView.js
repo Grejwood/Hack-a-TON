@@ -48,6 +48,13 @@ const GuestView = ({
         photos.
       </>
     );
+  } else if (status === "channelClosed") {
+    currentInstruction = (
+      <>
+        Payment session was successfully ended. Your remaining balance will be
+        returned to your account.
+      </>
+    );
   }
 
   return (
@@ -88,16 +95,16 @@ const GuestView = ({
             Smart-contract address: <span>{channelAddress}</span>
           </p>
         )}
-        {currentInstruction && (
-          <p className={style.label}>
-            Current instructions: <br />
-            {currentInstruction}
-          </p>
-        )}
         {fullState.current && (
           <p className={style.label}>
             Your balance:
             <span>{fromNano(fullState.current.balanceA)} TON</span>
+          </p>
+        )}
+        {currentInstruction && (
+          <p className={style.label}>
+            Current instructions: <br />
+            {currentInstruction}
           </p>
         )}
       </div>

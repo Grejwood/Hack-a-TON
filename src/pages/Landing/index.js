@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./landing.module.scss";
 import { Link } from "react-router-dom";
+import { makeid } from "../../components/connection/useConnection";
 
 const Landing = () => {
+  const channelId = useRef(makeid(20));
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <Logo />
-        <Link className={styles.callToActionBtn} to="/creator">
+        <Link
+          className={styles.callToActionBtn}
+          to={`/artist/${channelId.current}`}
+        >
           Create new page
         </Link>
       </div>
       <div className={styles.body}>
         <div>
           <p className={styles.title}>
-            Start your own fun page and earn TONs by selling your photos
+            Start your own fun page and earn TONs by selling your photos.
           </p>
         </div>
       </div>

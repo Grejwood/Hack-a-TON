@@ -14,17 +14,8 @@ import photo4 from "../../assets/img/photo4.jpeg";
 import photo8 from "../../assets/img/photo8.jpeg";
 import photo10 from "../../assets/img/photo10.jpeg";
 
-const ArtistView = ({ status, slots, setSlots }) => {
-  const [files, setFiles] = useState([]);
-  const [blur, setBlur] = useState(false);
-  const [guest, setGuest] = useState(false);
-  const [isPublish, setIsPublish] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [balance, setBalance] = useState(0);
-  const [address, setAddress] = useState("0x543fmv59ghj458bh5b934");
-
+const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
   const onSubmit = () => {
-    setIsLoading(true);
     setTimeout(() => {
       setSlots([
         {
@@ -64,49 +55,79 @@ const ArtistView = ({ status, slots, setSlots }) => {
           isSold: false,
         },
       ]);
-      setIsPublish(true);
-      setIsLoading(false);
     }, 2000);
   };
+
+  const statusLabel = {
+    empty: "",
+    notPublished: "",
+    notStarted: "Awaiting the fan to join the page...",
+    channelInit: "Establishing payment channel with the fan...",
+    channelOpen: "Channel is open.",
+    channelClosing: "Channel is being closed...",
+    channelClosed: "Channel closed",
+  }[status];
+
+  let currentInstruction;
+
+  if (status === "empty") {
+    currentInstruction = <>Please upload photos that you want to sell.</>;
+  } else if (status === "notStarted") {
+    const joinLink = `https://main.d3puvu1kvbh8ti.amplifyapp.com/guest/${channelId}`;
+    currentInstruction = (
+      <>
+        Share the link with the fan for them to join the page.{" "}
+        <a href={joinLink}>{joinLink}</a>
+      </>
+    );
+  } else if (status === "channelOpen") {
+    currentInstruction = (
+      <>
+        The fan can now select photos. Your balance will update automatically as
+        soon as the fan buys some photo.
+      </>
+    );
+  }
 
   return (
     <div className={style.container}>
       <div className={style.header}>
         <Logo />
-        <Button
-          className={style.submitBtn}
-          onClick={onSubmit}
-          isLoading={isLoading}
-          disabled={isPublish}
-        >
-          {isPublish ? 'Published' : 'Publish Content'}
-        </Button>
+        {["empty", "notPublished", "notStarted"].includes(status) && (
+          <Button
+            className={style.submitBtn}
+            onClick={publishPage}
+            disabled={status !== "notPublished"}
+          >
+            Publish page
+          </Button>
+        )}
       </div>
 
       <div className={style.info}>
         <span className={style.name}>For Creator</span>
-        <p className={style.label}>
-          Balance: <span>{balance}</span>
-        </p>
-        <p className={style.label}>
-          Address: <span>{address}</span>
-        </p>
+        {statusLabel && (
+          <p className={style.label}>
+            Channel Status: <span>{statusLabel}</span>
+          </p>
+        )}
+        {currentInstruction && (
+          <p className={style.label}>
+            Current instructions: <br />
+            {currentInstruction}
+          </p>
+        )}
       </div>
 
-      {isPublish && <span className={style.published}>Published</span>}
-
-      <div className={style.dropzone} onClick={onSubmit}>
-        <p className={style.dropzoneText}>Drop the files here...</p>
-      </div>
-
-      {slots && isPublish && (
-        <PreviewImg
-          className={style.thumbsContainer}
-          slots={slots}
-          blur={blur}
-          isPublish={isPublish}
-        />
+      {status === "empty" && (
+        <div className={style.dropzone} onClick={onSubmit}>
+          <p className={style.dropzoneText}>
+            Drop the files here, or click to select them
+          </p>
+        </div>
       )}
+
+      {slots && <PreviewImg className={style.thumbsContainer} slots={slots} />}
     </div>
   );
 };
