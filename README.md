@@ -1,8 +1,8 @@
 ![img.png](src/assets/img/readmyImg.png)
 
-Prototype: https://main.d3puvu1kvbh8ti.amplifyapp.com
-Presentation: https://github.com/Grejwood/Hack-a-TON/blob/main/Hack-a-TON%20Grejwood.pdf
-Video: https://www.youtube.com/watch?v=38JpX1vRNTk
+Prototype: https://main.d3puvu1kvbh8ti.amplifyapp.com  
+Presentation: https://github.com/Grejwood/Hack-a-TON/blob/main/Hack-a-TON%20Grejwood.pdf  
+Video: https://www.youtube.com/watch?v=38JpX1vRNTk  
 
 # Getting Started with Create React App
 
