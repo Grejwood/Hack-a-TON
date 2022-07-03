@@ -1,23 +1,27 @@
-import React, {useState, useEffect, useCallback} from "react";
-import cx from 'classnames';
+import React, { useState, useEffect, useCallback } from "react";
+import cx from "classnames";
 import style from "./dropzone.module.scss";
-import {useDropzone} from 'react-dropzone';
+import { useDropzone } from "react-dropzone";
 import PreviewImg from "../PreviewImg";
 
 const Dropzone = ({ files, setFiles }) => {
   const [value, setValue] = useState([]);
 
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
-      'image/*': []
+      "image/*": [],
     },
-    onDrop: acceptedFiles => {
-      console.log('acceptedFiles', acceptedFiles);
+    onDrop: (acceptedFiles) => {
+      console.log("acceptedFiles", acceptedFiles);
 
-      setFiles(acceptedFiles.map(file => Object.assign(file, {
-        preview: URL.createObjectURL(file)
-      })));
-    }
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
+    },
   });
 
   // const onUpload = (data) => {
@@ -42,17 +46,23 @@ const Dropzone = ({ files, setFiles }) => {
   // ));
 
   useEffect(() => {
-    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
   return (
     <>
-      <div className={cx(style.container, {[style.dragActive]: isDragActive})} {...getRootProps()}>
+      <div
+        className={cx(style.container, { [style.dragActive]: isDragActive })}
+        {...getRootProps()}
+      >
         <input {...getInputProps()} />
-        {isDragActive
-          ? <p className={style.dropzoneText}>Drop the files here ...</p>
-          : <p className={style.dropzoneText}>Drag 'n' drop some files here, or click to select files</p>
-        }
+        {isDragActive ? (
+          <p className={style.dropzoneText}>Drop the files here ...</p>
+        ) : (
+          <p className={style.dropzoneText}>
+            Drag & drop your photos here, or click to select them
+          </p>
+        )}
       </div>
 
       {/*{!!files.length && (*/}
@@ -66,7 +76,7 @@ const Dropzone = ({ files, setFiles }) => {
       {/*  {thumbs}*/}
       {/*</aside>*/}
     </>
-  )
-}
+  );
+};
 
 export default Dropzone;

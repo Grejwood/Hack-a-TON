@@ -1,3 +1,6 @@
+$base-dropzone-color: #c4347b;
+//$base-color: #0079fa;
+
 .container {
   padding: 50px 20px;
   max-width: 1200px;
@@ -30,7 +33,6 @@
 
 .submitBtn {
   display: flex;
-  margin-top: 30px;
   margin-left: auto;
 }
 
@@ -48,4 +50,28 @@
 
 .info {
   margin-top: 30px;
+}
+
+.dropzone {
+  margin-top: 100px;
+  padding: 50px;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: #ef76b2;
+  border-radius: 20px;
+  background: #fcfbfb;
+  cursor: pointer;
+  transition: border 0.1s, background 0.1s;
+
+  &:hover {
+    border-color: $base-dropzone-color;
+    background: #f8f5f5;
+  }
+}
+
+.dropzoneText {
+  margin: 0;
+  color: #969696;
+  font-size: 18px;
+  font-weight: 600;
 }
