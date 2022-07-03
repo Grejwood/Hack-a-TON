@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import style from "./home.module.scss";
-
+import axios from "axios";
 import Button from "../../components/layout/Button";
 import Dropzone from "../../components/layout/Dropzone";
 import PreviewImg from "../../components/layout/PreviewImg";
@@ -23,13 +22,12 @@ const Home = () => {
   // }, []);
 
   const onSubmit = (e) => {
-    e.preventDefault();
     setIsLoading(true);
 
     setTimeout(() => {
       setIsPublish(true)
       setIsLoading(false);
-    }, 5000);
+    }, 2000);
   };
 
   return (
