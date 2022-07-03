@@ -3,6 +3,12 @@ import { useParams } from "react-router-dom";
 import { useConnection } from "../../components/connection/useConnection";
 import { fromNano, getProvider, getWallet, toNano } from "../../utils";
 import BN from "bn.js";
+import ArtistView from "./ArtistView";
+import imageOne from "../../assets/img/imageOne.jpg";
+import ImageTwo from "../../assets/img/ImageTwo.jpg";
+import imageThree from "../../assets/img/imageThree.jpg";
+import imageFour from "../../assets/img/imageFour.jpg";
+import imageFive from "../../assets/img/imageFive.jpg";
 
 export const Artist = () => {
   const providerRef = useRef(null);
@@ -18,7 +24,13 @@ export const Artist = () => {
   const slots = [
     {
       id: 1,
-      content: "content 1",
+      content: imageOne,
+      price: toNano("0.1").toString(),
+      isSold: false,
+    },
+    {
+      id: 2,
+      content: ImageTwo,
       price: toNano("0.1").toString(),
       isSold: false,
     },
@@ -185,5 +197,5 @@ export const Artist = () => {
     channelWasClosed,
   });
 
-  return <div>{status}</div>;
+  return <ArtistView status={status} />;
 };

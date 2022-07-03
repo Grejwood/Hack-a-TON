@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from "react";
-import axios from "axios";
-import style from "./home.module.scss";
+import React, { useState, useEffect } from "react";
+import style from "../Artist/home.module.scss";
 
 import Button from "../../components/layout/Button";
 import Dropzone from "../../components/layout/Dropzone";
 import PreviewImg from "../../components/layout/PreviewImg";
-import {Logo} from "../Landing";
+import { Logo } from "../Landing";
 
-const Home = () => {
+const ArtistView = () => {
   const [files, setFiles] = useState([]);
-  const [blur, setBlur]= useState(false);
+  const [blur, setBlur] = useState(false);
   const [guest, setGuest] = useState(false);
   const [isPublish, setIsPublish] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +26,7 @@ const Home = () => {
     setIsLoading(true);
 
     setTimeout(() => {
-      setIsPublish(true)
+      setIsPublish(true);
       setIsLoading(false);
     }, 5000);
   };
@@ -35,19 +34,7 @@ const Home = () => {
   return (
     <div className={style.container}>
       <div className={style.header}>
-        <Logo/>
-        <Button>
-          TON Wallet Connect
-        </Button>
-      </div>
-
-      <div className={style.info}>
-        <span className={style.name}>For Creator</span>
-        <p className={style.label}>Balance: <span>{balance}</span></p>
-        <p className={style.label}>Address: <span>{address}</span></p>
-      </div>
-
-      {!isPublish && (
+        <Logo />
         <Button
           className={style.submitBtn}
           onClick={onSubmit}
@@ -56,18 +43,21 @@ const Home = () => {
         >
           Publish Content
         </Button>
-      )}
+      </div>
 
-      {isPublish &&
-        <span className={style.published}>Published</span>
-      }
+      <div className={style.info}>
+        <span className={style.name}>For Creator</span>
+        <p className={style.label}>
+          Balance: <span>{balance}</span>
+        </p>
+        <p className={style.label}>
+          Address: <span>{address}</span>
+        </p>
+      </div>
 
-      {!guest && (
-        <Dropzone
-          files={files}
-          setFiles={setFiles}
-        />
-      )}
+      {isPublish && <span className={style.published}>Published</span>}
+
+      {!guest && <Dropzone files={files} setFiles={setFiles} />}
 
       {!!files.length && (
         <PreviewImg
@@ -80,4 +70,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ArtistView;

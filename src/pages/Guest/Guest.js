@@ -11,6 +11,7 @@ import {
 } from "../../utils";
 import { Button } from "react-bootstrap";
 import BN from "bn.js";
+import GuestView from "./GuestView";
 
 export const Guest = () => {
   const providerRef = useRef(null);
@@ -18,9 +19,9 @@ export const Guest = () => {
   const [config, setConfig] = useState({});
   const [slots, setSlots] = useState([]);
   const [walletAddressA, setWalletAddress] = useState(null);
+  const [channelAddress, setChannelAddress] = useState(null);
   const [walletA, setWallet] = useState(null);
   const [keyPairA, setKeyPair] = useState(null);
-  const initBalance = 5;
   const [status, setStatus] = useState("notStarted");
   const channel = useRef(null);
   const fullState = useRef(null);
@@ -53,22 +54,27 @@ export const Guest = () => {
   };
 
   const startChannel = async () => {
-    const balance = await tonweb.getBalance(walletAddressA);
-    if (balance < initBalance) {
-      console.log("Not enough coins");
-      return;
-    }
+    setStatus("checkingBalance");
+    // const balance = await tonweb.getBalance(walletAddressA);
+    //
+    // if (new BN(balance).lt(toNano("1"))) {
+    //   setStatus("notStarted");
+    //   alert("Not enough coins. Send at least 1 TON.");
+    //   return;
+    // }
+    // new BN(balance).sub(toNano("1"))
+
     setStatus("startingChannel");
 
     const channelInitState = {
-      balanceA: toNano("1"), // A's initial balance in Toncoins. Next A will need to make a top-up for this amount
+      balanceA: toNano("2"), // A's initial balance in Toncoins. Next A will need to make a top-up for this amount
       balanceB: toNano("0"), // B's initial balance in Toncoins. Next B will need to make a top-up for this amount
       seqnoA: new BN(0), // initially 0
       seqnoB: new BN(0), // initially 0
     };
 
     const channelConfig = {
-      channelId: new BN(4), // Channel ID, for each new channel there must be a new ID
+      channelId: new BN(6), // Channel ID, for each new channel there must be a new ID
       addressA: new tonweb.Address(walletAddressA), // A's funds will be withdrawn to this wallet address after the channel is closed
       addressB: new tonweb.Address(walletAddressB), // B's funds will be withdrawn to this wallet address after the channel is closed
       initBalanceA: channelInitState.balanceA,
@@ -84,12 +90,15 @@ export const Guest = () => {
       hisPublicKey: hisPublicKey,
     });
     const channelAddress = await channel.current.getAddress(); // address of this payment channel smart-contract in blockchain
+    setChannelAddress(channelAddress.toString(true, true, true));
     console.log("channelAddress=", channelAddress.toString(true, true, true));
 
     const fromWalletA = channel.current.fromWallet({
       wallet: walletA,
       secretKey: keyPairA.secretKey,
     });
+
+    setStatus("deployingChannel");
 
     if ((await getChannelState()) == null) {
       console.log("deploying");
@@ -99,11 +108,26 @@ export const Guest = () => {
     if ((await getChannelState()) == null) {
       await waitUntilState(channel.current, 0);
     }
+
+    setStatus("toppingUpChannel");
     console.log("ok");
 
-    await fromWalletA
-      .topUp({ coinsA: channelInitState.balanceA, coinsB: new BN(0) })
-      .send(channelInitState.balanceA.add(toNano("0.05")));
+    const currentBalanceA = (await channel.current.getData()).balanceA;
+    const needTopup = channelInitState.balanceA.sub(currentBalanceA);
+
+    if (needTopup.gt(new BN(0))) {
+      const walletBalance = await tonweb.getBalance(walletAddressA);
+
+      if (needTopup.gt(new BN(walletBalance))) {
+        setStatus("notStarted");
+        alert("You don't have enough coins on your wallet. Please send 2 TON.");
+        return;
+      }
+
+      await fromWalletA
+        .topUp({ coinsA: channelInitState.balanceA, coinsB: new BN(0) })
+        .send(needTopup.add(toNano("0.05")));
+    }
 
     await waitUntilBalance(
       channel.current,
@@ -112,6 +136,8 @@ export const Guest = () => {
     );
 
     console.log("balance ok");
+
+    setStatus("initingChannel");
 
     if ((await getChannelState()) === 0) {
       await fromWalletA.init(channelInitState).send(toNano("0.05"));
@@ -264,6 +290,19 @@ export const Guest = () => {
   });
 
   return (
+    <GuestView
+      status={status}
+      walletAddressA={walletAddressA}
+      startChannel={startChannel}
+      closeChannel={closeChannel}
+      channelAddress={channelAddress}
+      fullState={fullState}
+      buySlot={buySlot}
+      slots={slots}
+    />
+  );
+
+  return (
     <div>
       <p>State: {status}</p>
       {status === "notStarted" && (
@@ -272,7 +311,6 @@ export const Guest = () => {
       {status === "channelOpen" && (
         <Button onClick={closeChannel}>Close channel</Button>
       )}
-      <p>Init balance: {initBalance}</p>
       <p>
         Balance:{" "}
         {fullState.current ? fromNano(fullState.current.balanceA) : "none"}
