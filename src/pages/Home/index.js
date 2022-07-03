@@ -1,5 +1,7 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 import style from "./home.module.scss";
+
 import Button from "../../components/layout/Button";
 import Dropzone from "../../components/layout/Dropzone";
 import PreviewImg from "../../components/layout/PreviewImg";
@@ -13,6 +15,12 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [balance, setBalance] = useState(0);
   const [address, setAddress] = useState("0x543fmv59ghj458bh5b934");
+
+  // useEffect(() => {
+  //   axios
+  //     .post("CommunicationEndpoint - http://jsonplaceholder.typicode.com/posts")
+  //     .then((response) => setFiles(response.data));
+  // }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();

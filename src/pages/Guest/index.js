@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from "axios";
 import style from "../Home/home.module.scss";
 import PreviewImg from "../../components/layout/PreviewImg";
 import Button from "../../components/layout/Button";
@@ -22,6 +23,12 @@ const Guest = () => {
     {preview: imageFour, isSell: false},
     {preview: imageFive, isSell: false}
   ];
+
+  // useEffect(() => {
+  //   axios
+  //     .get("CommunicationEndpoint http://jsonplaceholder.typicode.com/posts")
+  //     .then((response) => setFiles(response.data));
+  // }, []);
 
   return (
     <div className={style.container}>
