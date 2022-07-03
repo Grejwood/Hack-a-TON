@@ -13,9 +13,14 @@ import photo3 from "../../assets/img/photo3.jpeg";
 import photo4 from "../../assets/img/photo4.jpeg";
 import photo8 from "../../assets/img/photo8.jpeg";
 import photo10 from "../../assets/img/photo10.jpeg";
+import loaderContent from "../../assets/img/loaderContent.svg";
 
 const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = () => {
+    setIsLoading(true);
+
     setTimeout(() => {
       setSlots([
         {
@@ -55,6 +60,7 @@ const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
           isSold: false,
         },
       ]);
+      setIsLoading(false);
     }, 2000);
   };
 
@@ -77,7 +83,7 @@ const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
     currentInstruction = (
       <>
         Share the link with the fan for them to join the page.{" "}
-        <a href={joinLink}>{joinLink}</a>
+        <a href={joinLink} target='_blank'>{joinLink}</a>
       </>
     );
   } else if (status === "channelOpen") {
@@ -122,7 +128,10 @@ const ArtistView = ({ status, slots, setSlots, publishPage, channelId }) => {
       {status === "empty" && (
         <div className={style.dropzone} onClick={onSubmit}>
           <p className={style.dropzoneText}>
-            Drop the files here, or click to select them
+            {isLoading
+              ? <img className={style.loader} src={loaderContent} alt='loader'/>
+              : 'Drop the files here, or click to select them'
+            }
           </p>
         </div>
       )}

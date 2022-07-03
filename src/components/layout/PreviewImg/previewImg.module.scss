@@ -67,8 +67,8 @@
   -o-filter: blur(20px);
   -ms-filter: blur(20px);
   filter: blur(20px);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  //backdrop-filter: blur(20px);
+  //-webkit-backdrop-filter: blur(20px);
 }
 
 .buyBtn {

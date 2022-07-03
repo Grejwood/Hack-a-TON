@@ -75,3 +75,12 @@ $base-dropzone-color: #c4347b;
   font-size: 18px;
   font-weight: 600;
 }
+
+.loader {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
