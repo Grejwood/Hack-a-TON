@@ -13,9 +13,14 @@ function makeid(length) {
   return result;
 }
 
-export const useConnection = (channelId, onEvent) => {
+export const useConnection = (channelId, handlers = {}) => {
   const pusherRef = useRef();
   const clientId = useRef(makeid(12));
+  const privateHandlers = useRef(handlers);
+
+  useEffect(() => {
+    privateHandlers.current = handlers;
+  }, [handlers]);
 
   useEffect(() => {
     const newPusher = new Pusher("ae58f5c5e4c0cca87aa1", {
@@ -29,7 +34,10 @@ export const useConnection = (channelId, onEvent) => {
     const channel = newPusher.subscribe(channelId);
     channel.bind("event", function (event) {
       if (event.client !== clientId.current) {
-        onEvent(event.message);
+        const handler = privateHandlers.current[event.type];
+        if (handler) {
+          handler(event.message);
+        }
       }
     });
 
@@ -53,8 +61,9 @@ export const useConnection = (channelId, onEvent) => {
     );
   };
 
-  const sendEvent = async (message) => {
+  const sendEvent = async (type, message) => {
     await sendMessage(channelId, "event", {
+      type,
       message,
       client: clientId.current,
     });
